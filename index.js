@@ -15,8 +15,16 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
     try{
         await client.connect();
-        const taskList = client.db('toDo').collection('task')
+        const taskList = client.db('toDo').collection('task');
+        
 
+        app.get('/task', async(req, res)=>{
+            const query = {};
+            const cursor = taskList.find(query);
+            const tasks = await cursor.toArray();
+            res.send(tasks);
+        })
+        
     }
     finally{
 
