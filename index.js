@@ -16,7 +16,6 @@ async function run(){
     try{
         await client.connect();
         const taskList = client.db('toDo').collection('task');
-        
 
         app.get('/task', async(req, res)=>{
             const query = {};
@@ -25,6 +24,13 @@ async function run(){
             res.send(tasks);
         })
         
+        // task post
+        app.post('/task', async (req, res) => {
+            const newTask = req.body;
+            const result = await taskList.insertOne(newTask);
+            res.send(result);
+        })
+
     }
     finally{
 
